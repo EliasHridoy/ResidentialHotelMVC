@@ -1,0 +1,79 @@
+﻿@using ResidentialHotelMVCWebApp.Models.ViewModels
+@model ViewAvailableRoomsViewModel
+@{
+    Layout = null;
+
+    string message = ViewBag.message;
+    List<ViewAvailableRoomsViewModel> rooms = ViewBag.rooms;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Show</title>
+</head>
+<body>
+    <div>
+
+
+        @using (@Html.BeginForm(new { id = "AvailableRooms" }))
+        {
+            <table>
+                <tr>
+                    <td>@Html.Label("Select Date")</td>
+                    <td><input type="date" name="date" id="date"/></td>
+                    <td>@message</td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="Show" /></td>
+                </tr>
+            </table>
+
+           
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Room No</td>
+                            <td>Category</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (rooms != null)
+                        {
+                            foreach (ViewAvailableRoomsViewModel room in rooms)
+                             {
+                                 <tr>
+                                     <td>@room.RoomNo</td>
+                                     <td>@room.Category</td>
+                                 </tr>
+                             }
+
+                        }
+
+                    </tbody>
+
+
+                </table>
+
+            
+        }
+
+
+
+
+
+
+	<script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script> 
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script> 
+        
+
+    </div>
+</body>
+</html>

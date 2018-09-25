@@ -1,0 +1,60 @@
+﻿@using ResidentialHotelMVCWebApp.Models
+@model RoomInfoModel
+
+@{
+    Layout = null;
+    List<CategoryModel> categorys = ViewBag.categorys;
+    string message = ViewBag.message;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Save</title>
+</head>
+<body>
+    <div>
+
+        @using (@Html.BeginForm(new { id = "RoomInfo" }))
+{
+        <table>
+            <tr>
+                <td>@Html.LabelFor(x => x.RoomNo)</td>
+                <td>@Html.TextBoxFor(x => x.RoomNo)</td>
+                <td>@Html.ValidationMessageFor(x => x.RoomNo)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(x => x.CategoryId)</td>
+                <td>@Html.DropDownList("CategoryId", new SelectList(categorys, "Id", "Category"), "--Select--", "")</td>
+                <td>@Html.ValidationMessageFor(x => x.CategoryId)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(x => x.Description)</td>
+                <td>@Html.TextBoxFor(x => x.Description)</td>
+                <td>@Html.ValidationMessageFor(x => x.Description)</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Save" />
+                </td>
+                <td>@message</td>
+</tr>
+
+
+</table>
+
+
+    }
+
+
+	<script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script> 
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script> 
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,142 @@
+﻿@using ResidentialHotelMVCWebApp.Models
+@using ResidentialHotelMVCWebApp.Models.ViewModels
+@model BookRoomModel
+
+@{
+    Layout = null;
+    List<CategoryModel> categorys = ViewBag.categorys;
+
+    string message = ViewBag.message;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Save</title>
+</head>
+<body>
+    <div>
+
+
+
+
+        @using (@Html.BeginForm(new { id = "BookRoom" }))
+        {
+
+            <table>
+                <tr>
+                    <td>@Html.LabelFor(x => x.CategoryId)</td>
+                    <td>@Html.DropDownListFor(x => x.CategoryId, new SelectList(categorys, "Id", "Category"), "--select--")</td>
+                    <td>@Html.ValidationMessageFor(x => x.CategoryId)</td>
+                </tr>
+                <tr>
+                    <td>@Html.Label("RoomId")</td>
+                    <td>@Html.DropDownList("RoomId", new SelectList(""), "--Select--")</td>
+                    <td>@Html.ValidationMessageFor(x => x.RoomId)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(x => x.SelectDate)</td>
+                   @* <td>@Html.TextBoxFor(x => x.SelectDate)</td>*@
+
+                    <td><input type="date" name="SelectDate" id="SelectDate"/></td>
+                    <td>@Html.ValidationMessageFor(x => x.SelectDate)</td>
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(x => x.BookedBy)</td>
+                    <td>@Html.TextBoxFor(x => x.BookedBy)</td>
+                    <td>@Html.ValidationMessageFor(x => x.BookedBy)</td>
+                    
+                </tr>
+                <tr>
+                    <td>@Html.LabelFor(x => x.Address)</td>
+                    <td>@Html.TextBoxFor(x => x.Address) </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="Save"/>
+                    </td>
+                    <td>@message</td>
+                </tr>
+
+            </table>
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+        <script>
+            $(document).ready(function () {
+
+                $('#CategoryId').change(function () {
+
+                    var CategoryId = $('#CategoryId').val();
+
+                    var json = { categoryId: CategoryId };
+
+                    $.ajax({
+
+                        type: "POST",
+
+                        url: '@Url.Action("GetRoomByCategoryId", "BookRoom")',
+                        //url: '/Department/GetStudentsByDepartmentId',
+
+                        contentType: "application/json; charset=utf-8",
+
+                        data: JSON.stringify(json),
+
+                        success: function (data) {
+
+
+                            //$("#StudentDetails").empty();
+                            $("#RoomId").empty();
+                            $("#RoomId").append('<option value="">--Select--</option>');
+
+
+
+                            $.each(data, function (key, value) {
+
+                                $("#RoomId").append('<option value=' + value.Id + '>' + value.RoomNo + '</option>');
+                                //$("#StudentDetails").append('<tr> <td>'+value.StudentName+'</td>   <td>'+value.Address+'</td>   <td>'+value.DepartmentName+'</td></tr>');
+
+                            });
+
+                        }
+                    });
+
+                });
+            });
+        </script>
+
+
+
+
+
+
+
+	<script src="~/Scripts/jquery-1.10.2.js"></script>
+        <script src="~/Scripts/jquery.validate.min.js"></script> 
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script> 
+        	
+
+
+
+
+
+    </div>
+</body>
+</html>
